@@ -55,7 +55,7 @@ On **backend** folder, run:
 
 ### Graphql Playgroud Query/Mutation Example:
 
-- List Person: 
+- **List Person**: 
 `
   {
     persons {
@@ -65,8 +65,10 @@ On **backend** folder, run:
     }
   }
 `
+
 <br/>
-- Add Person:
+
+- **Add Person**:
 `
 mutation {
   createPerson(
@@ -81,8 +83,10 @@ mutation {
   }
 }
 `
+
 <br/>
-- Find Person by Id:
+
+- **Find Person by Id**:
 `
 {
   person(id: "5f88da953979ec67040b6a3a") {
@@ -92,8 +96,10 @@ mutation {
   }
 }
 `
+
 <br/>
-- Update Person:
+
+- **Update Person**:
 `
 mutation {
   updatePerson(
@@ -109,16 +115,19 @@ mutation {
   }
 }
 `
+
 <br/>
-- Delete Person:
+
+- **Delete Person**:
 `
 mutation {
   deletePerson(id: "5f88da953979ec67040b6a3a")
 }
 `
+
 <br/>
 
-- Generate Person from random user:
+- **Generate Person from random user**:
 `
 mutation {
   generatePersons(total: 2) {
@@ -128,6 +137,7 @@ mutation {
   }
 }
 `
+
 <br/>
 
 ### Front Implementation
