@@ -16,7 +16,7 @@ This project was inspired on:
 
 - node
 - yarn
-- apollo
+- apollo-express
 - mongoose
 - axios
 - mongodb
@@ -24,8 +24,8 @@ This project was inspired on:
 
 ### Modules
 
-- Backend files in under /backend folder
-- Front files in under /fornt folder (upcomming)
+- Backend files in under **/backend** folder
+- Front files in under **/frontend** folder (_upcomming_)
 
 
 ### Instalation
