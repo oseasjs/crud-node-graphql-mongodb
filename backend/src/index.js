@@ -3,6 +3,7 @@ import express from "express";
 import {mongoDbConnect} from './config/mongo-db-config';
 import {typeDefs} from "./typeDefs";
 import {resolvers} from "./resolvers";
+import {sqsInit} from "./config/sqs-config";
 
 const startServer = async () => {
 
@@ -16,6 +17,8 @@ const startServer = async () => {
   server.applyMiddleware({ app });
 
   mongoDbConnect();
+
+  sqsInit();
 
   app.listen({ port: 4000 }, () =>
     console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`)
