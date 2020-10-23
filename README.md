@@ -48,10 +48,11 @@ On **backend** folder, run:
 
 - **Project structure**: Following common structure suggest by Emerson Pereira (link above): typeDefs, resolvers and models
 - **/typeDev**: first layer, configure graphql queries, mutations and types;
-- **/resolvers**: second layer, receive data from graphql, implement some business rules, convert to mongo format and call persistence;
+- **/resolvers**: second layer, receive data from graphql and send to service layer;
 - **/model**: persistence entity using mongo db schema;
+- **/service**: receive data from resolvers and producers, implement some business rules, convert to mongo format and call persistence;
 - **/config**: mongo db connection configuration;
-- **/sqs**: generate person using asyncronous message with sns/sqs and redis to idempotent control. Using randomuser api with axios to generate person data to persist generated data on mongo db; 
+- **/sqs**: generate person using asyncronous message with sqs. Using randomuser api with axios to generate person data to persist generated data on mongo db. There are 2 queues used on async process: random-user-queue and person-queue. Both queues is bean created by sqsInit method. For Idempotent control should used Redis (_upcommig_);
 
 ### Graphql Playgroud Query/Mutation Example:
 
@@ -127,7 +128,7 @@ mutation {
 
 <br/>
 
-- **Generate Person from random user**:
+- **Generate Person from random user using async process**:
 `
 mutation {
   generatePersons(total: 2) {
@@ -147,7 +148,7 @@ _Upcomming_
 
 ### Docker Compose
 
-There is a docker compose on ./local/docker-compose.yml with MongoDB, Mongo Express, Redis and Localstack containner (SNS and SQS service), that could be run with command:
+There is a docker compose on ./local/docker-compose.yml with MongoDB, Mongo Express, Localstack containner (SNS and SQS service) and Redis for idempotent control, that could be run with command:
 
 ```docker-compose up -d```
 
@@ -158,6 +159,12 @@ After run docker-compose, you can access:
 - Mongo-Express: http://localhost:8081/db/ (username: admin | password: admin)
 - Random User: https://randomuser.me/api/?results=2
 
+Some aws-cli commands very helpful to manipulate queues
+
+- aws --endpoint-url=http://localhost:4566 sqs list-queues
+- aws sqs delete-queue --queue-url http://localhost:4566/000000000000/person-queue --endpoint-url=http://localhost:4566
+- aws --endpoint-url=http://localhost:4566 sqs list-queues
+- aws --endpoint-url=http://localhost:4566 sqs create-queue --queue-name myqueue
 
 ### Tests
 
